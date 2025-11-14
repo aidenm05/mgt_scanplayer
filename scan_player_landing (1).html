@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Player | Rediscover Music. One Scan at a Time.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,179,71,0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffb347 0%, #ff9a56 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #80cbc4;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+
+        .device-mockup {
+            width: 420px;
+            height: 320px;
+            background: linear-gradient(145deg, #3a3a4e, #252535);
+            border-radius: 28px;
+            margin: 2rem auto;
+            padding: 2.5rem 2rem 2rem;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.6),
+                        inset 0 3px 6px rgba(255,179,71,0.15),
+                        inset 0 -2px 4px rgba(0,0,0,0.4);
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+            border: 3px solid #1a1a2a;
+        }
+        
+        .device-mockup::before {
+            content: '';
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: linear-gradient(90deg, #ffb347, #ff9a56);
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(255,179,71,0.4);
+        }
+        
+        .device-mockup::after {
+            content: 'SCAN PLAYER';
+            position: absolute;
+            bottom: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffb347;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .device-screen {
+            width: 240px;
+            height: 120px;
+            background: linear-gradient(135deg, #0a2a35 0%, #143d4f 100%);
+            border-radius: 8px;
+            margin: 0 auto 1.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #4dd0c0;
+            box-shadow: inset 0 3px 12px rgba(0,0,0,0.7),
+                        0 2px 4px rgba(255,179,71,0.1);
+            border: 2px solid #1a3a45;
+            position: relative;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .screen-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .screen-title {
+            font-size: 0.65rem;
+            color: #80cbc4;
+            letter-spacing: 1px;
+        }
+        
+        .screen-main {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #4dd0c0;
+        }
+        
+        .screen-wave {
+            display: flex;
+            gap: 3px;
+            margin-top: 0.3rem;
+        }
+        
+        .wave-bar {
+            width: 3px;
+            height: 12px;
+            background: linear-gradient(180deg, #4dd0c0, #2a9d8f);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+        
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; height: 18px; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; height: 15px; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; height: 20px; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; height: 16px; }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); opacity: 0.7; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        .device-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            position: relative;
+        }
+
+        .device-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffb347, #ff9a56);
+            box-shadow: 0 5px 15px rgba(255,179,71,0.5),
+                        inset 0 2px 4px rgba(255,255,255,0.3),
+                        inset 0 -2px 4px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #ff8c3a;
+            position: relative;
+        }
+        
+        .device-btn::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent);
+        }
+
+        .device-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,179,71,0.7),
+                        inset 0 2px 4px rgba(255,255,255,0.3);
+        }
+        
+        .device-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 3px 10px rgba(255,179,71,0.5),
+                        inset 0 3px 6px rgba(0,0,0,0.3);
+        }
+        
+        .speaker-grill {
+            display: flex;
+            gap: 8px;
+            position: absolute;
+            bottom: 0.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .grill-dot {
+            width: 4px;
+            height: 4px;
+            background: rgba(255,179,71,0.3);
+            border-radius: 50%;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ffb347 0%, #ff9a56 100%);
+            color: #1a1a2e;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255,179,71,0.4);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255,179,71,0.6);
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #ffb347 0%, #80cbc4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .problem-section {
+            background: rgba(26,26,46,0.5);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .problem-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #b0b0c0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .solution-section {
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(145deg, #2a2a3e, #1f1f2e);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            border-color: #ffb347;
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(255,179,71,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffb347;
+            margin-bottom: 1rem;
+        }
+
+        .feature-desc {
+            color: #b0b0c0;
+            line-height: 1.6;
+        }
+
+        .how-it-works {
+            background: rgba(26,26,46,0.5);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffb347, #ff9a56);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 24px rgba(255,179,71,0.3);
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #80cbc4;
+        }
+
+        .video-section {
+            text-align: center;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            background: #000;
+            aspect-ratio: 16/9;
+            position: relative;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a5f7a 0%, #0f3443 100%);
+        }
+
+        .play-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255,179,71,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-icon:hover {
+            transform: scale(1.1);
+            background: rgba(255,179,71,1);
+        }
+
+        .waitlist-section {
+            background: linear-gradient(135deg, rgba(255,179,71,0.1), rgba(128,203,196,0.1));
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 640px;
+            margin: 2rem auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 2px solid #2a2a3e;
+            border-radius: 12px;
+            background: rgba(26,26,46,0.8);
+            color: #f4f4f4;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ffb347;
+            box-shadow: 0 0 20px rgba(255,179,71,0.2);
+        }
+
+        input::placeholder {
+            color: #6a6a7a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #6a6a7a;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .device-mockup {
+                width: 340px;
+                height: 280px;
+                padding: 2rem 1.5rem 1.5rem;
+            }
+            
+            .device-screen {
+                width: 200px;
+                height: 100px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="logo">SCAN PLAYER</div>
+            <p class="tagline">Rediscover Music. One Scan at a Time.</p>
+            
+            <div class="device-mockup">
+                <div class="device-screen">
+                    <div class="screen-text">
+                        <div class="screen-title">NOW PLAYING</div>
+                        <div class="screen-main">♪ Track 03 ♪</div>
+                        <div class="screen-wave">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="device-buttons">
+                    <div class="device-btn">◄◄</div>
+                    <div class="device-btn">▶</div>
+                    <div class="device-btn">►►</div>
+                </div>
+                <div class="speaker-grill">
+                    <div class="grill-dot"></div>
+                    <div class="grill-dot"></div>
+                    <div class="grill-dot"></div>
+                    <div class="grill-dot"></div>
+                    <div class="grill-dot"></div>
+                    <div class="grill-dot"></div>
+                    <div class="grill-dot"></div>
+                </div>
+            </div>
+            
+            <button class="cta-button" onclick="document.getElementById('waitlist').scrollIntoView({behavior: 'smooth'})">
+                Join the Movement
+            </button>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="problem-section">
+        <h2>The Problem</h2>
+        <p class="problem-text">
+            Music discovery today feels mechanical and endless. Scrolling through digital libraries has replaced 
+            the excitement of flipping through records or cassettes. Listeners want an experience that feels 
+            personal again — not dictated by algorithms.
+        </p>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <h2>The Solution</h2>
+        <p class="problem-text" style="margin-bottom: 3rem;">
+            The Scan Player brings back the magic of tactile listening.
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎛️</div>
+                <div class="feature-title">Physical Control</div>
+                <p class="feature-desc">Real buttons for play, pause, rewind, and volume. Feel the music again.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📷</div>
+                <div class="feature-title">Instant Scanning</div>
+                <p class="feature-desc">Scan any album cover, vinyl sleeve, or QR tag to play instantly.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📡</div>
+                <div class="feature-title">Seamless Streaming</div>
+                <p class="feature-desc">Bluetooth + Wi-Fi connectivity for unlimited music access.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <div class="feature-title">Distraction-Free</div>
+                <p class="feature-desc">Compact, nostalgic design. No apps, no notifications, just music.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-title">Pick an Album</div>
+                <p class="feature-desc">Browse your collection or discover new music in-store.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-title">Scan It</div>
+                <p class="feature-desc">Point your Scan Player at the album cover or QR tag.</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-title">Listen & Enjoy</div>
+                <p class="feature-desc">Instantly stream, sample, or save. It's that simple.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <h2>See It In Action</h2>
+        
+        <div class="video-container">
+            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTMG_F6Dw_faYVDdSaw9sRF9in4lRMcjtfeLtC2K5cKdYHew6xxKV8zQ50Lj-Wyg2EWikJ6tyuXCTEf/pubembed?start=true&loop=false&delayms=60000" 
+                    frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" 
+                    webkitallowfullscreen="true" style="position: absolute; top: 0; left: 0;">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section class="waitlist-section" id="waitlist">
+        <h2>Help Shape Scan Player</h2>
+        <p class="problem-text" style="margin-bottom: 2rem;">
+            We're building something special, and we want your input. Take our quick 2-minute survey to share your thoughts on music listening—and you might get early access when we launch.
+        </p>
+        
+        <div class="form-container">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSVuzNV3E4tdsOvSqIU1L56qXOlu3yVcVUW4Wao5LpSBEiCA/viewform?usp=dialog" 
+               target="_blank" style="text-decoration: none;">
+                <button class="cta-button">Take the Survey</button>
+            </a>
+            <p style="margin-top: 1rem; color: #80cbc4; font-size: 0.9rem;">
+                Survey participants may receive early access invitations
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Scan Player. Rediscover Music.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling and animations
+    </script>
+</body>
+</html>
